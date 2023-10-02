@@ -15,6 +15,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var hasil: TextView
     private lateinit var tombol: Button
 
+    companion object{
+        private const val STATE_RESULT = "state_result"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,8 +29,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         hasil = findViewById(R.id.result)
 
         tombol.setOnClickListener(this)
+
+        if (savedInstanceState != null) {
+            hasil.text = savedInstanceState.getString(STATE_RESULT)
+        }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_RESULT, hasil.text.toString())
+
+    }
     override fun onClick(v: View?) {
          if (v?.id==R.id.btn_result){
              val panjang = panjang.text.toString().trim()
